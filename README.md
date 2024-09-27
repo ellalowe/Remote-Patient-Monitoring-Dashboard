@@ -1,6 +1,6 @@
-# My Personal Project
+# Remote Patient Monitoring Dashboard
 
-## Remote Patient Monitoring Dashboard
+
 
 ## What will the application do?
 
@@ -26,5 +26,3 @@ This project interests me because it allows me to apply my passion for healthcar
 - As a user, I want to be able to set custom alert thresholds for each patient’s health metrics so that I am notified when values are outside the normal range.
 - As a user, I want to be able to filter the list of patients by health status so that I can prioritize those who need immediate attention.
 
-
-An example of text with **bold** and *italic* fonts.  
