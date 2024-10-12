@@ -1,39 +1,28 @@
 package model;
-import java.util.List;
 
 
-
-public class Patient extends User {
+public class Patient {
 
  
- // Initializes a new Patient object with the given 
- // username, password, email, patientID, and medical history.
+ // represents a patient with a name and default health status set to "normal"
 
-    public Patient (String username, String password, String email, String patientID, String medicalHistory) {
-
-        super(username, password, email, medicalHistory);
-
+    public Patient (String name) {
      
-
-}
-
-    // REQUIRES: None
-    // MODIFIES: None
-    // EFFECTS: Returns the Health Metrics for this patient
-
-    public List<HealthMetric> getHealthMetrics() {
-       
-        return null;
-
     }
 
+    // Getter for the name
+    public String getName() {
+        return null;
+    }
 
-    // REQUIRES: healthMetric must not be null.
-    // MODIFIES: this
-    // EFFECTS: Adds the given health metric to the patient's list of health metrics.
-    
-    public void addHealthMetric(HealthMetric healthMetric) {
-    
+    // Getter for the status
+    public String getStatus() {
+        return null;
+    }
+
+    // Setter for the status
+    public void setStatus(String status) {
+      
     }
 
 
