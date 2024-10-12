@@ -1,5 +1,8 @@
 package model;
 
+// The Patient class represents a patient with a name and a health status. 
+// By default, the health status of a patient is set to "normal." 
+// The class provides functionality to get and set the health status, and also to retrieve the patient's name.
 
 public class Patient {
 
