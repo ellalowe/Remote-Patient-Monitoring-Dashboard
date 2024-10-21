@@ -12,7 +12,7 @@ public class Patient {
  
  // represents a patient with a name and default health status set to "Normal"
 
-    public Patient (String name) {
+    public Patient(String name) {
 
         this.name = name;
         this.status = "Normal";
@@ -43,7 +43,7 @@ public class Patient {
         }
     }
       
-    }
+}
 
 
 
