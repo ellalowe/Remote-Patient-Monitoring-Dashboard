@@ -25,7 +25,7 @@ public class TestHealthcareProvider {
     @Test
     void testHealthcareProvider() {
 
-        assertEquals(rachel.getName(), "rachel");
+        assertEquals(rachel.getName(), "Rachel");
     }
 
 
