@@ -6,10 +6,16 @@ package model;
 
 public class Patient {
 
+    private String name;
+    private String status; // Normal or Critical
+
  
  // represents a patient with a name and default health status set to "Normal"
 
     public Patient (String name) {
+
+        this.name = name;
+        this.status = "Normal";
 
        
      
@@ -17,18 +23,27 @@ public class Patient {
 
     // Getter for the name
     public String getName() {
-        return null;
+        return name;
     }
 
     // Getter for the status
     public String getStatus() {
-        return null;
+        return status;
     }
 
     // Setter for the status
     public void setStatus(String status) {
+
+        if (status.equals("Normal") || status.equals("Critical")) {
+            this.status = status;
+
+        } else {
+          
+            System.out.println("Invalid status. Status must be 'Normal' or 'Critical'.");
+        }
+    }
       
     }
 
 
-}
+
