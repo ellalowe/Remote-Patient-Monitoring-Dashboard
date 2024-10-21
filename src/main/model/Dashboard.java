@@ -11,7 +11,7 @@ public class Dashboard {
 
     public Dashboard () {
 
-        this.patients = new ArrayList<>();
+        patients = new ArrayList<>();
 
     }
 
@@ -20,11 +20,10 @@ public class Dashboard {
     // EFFECTS: Adds a list of all the new patients to the dashbaord
 
     public void addPatients(List<Patient> newPatients) {
-
+ 
         for (Patient patient : newPatients) {
-            
             if (!patients.contains(patient)) {
-                patients.addAll(newPatients);  
+                patients.add(patient);  // Add the patient individually
             }
         }
        
