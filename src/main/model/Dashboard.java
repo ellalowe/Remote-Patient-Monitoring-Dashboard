@@ -9,7 +9,7 @@ public class Dashboard {
 
     // EFFECTS: Has a list of patients intialized to be empty
 
-    public Dashboard () {
+    public Dashboard() {
 
         patients = new ArrayList<>();
 
