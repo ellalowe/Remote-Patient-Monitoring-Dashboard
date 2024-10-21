@@ -7,9 +7,11 @@ package model;
 public class Patient {
 
  
- // represents a patient with a name and default health status set to "normal"
+ // represents a patient with a name and default health status set to "Normal"
 
     public Patient (String name) {
+
+       
      
     }
 
