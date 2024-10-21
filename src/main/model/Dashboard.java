@@ -1,12 +1,17 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Dashboard {
 
+    private List<Patient> patients;
+
     // EFFECTS: Has a list of patients intialized to be empty
 
     public Dashboard () {
+
+        this.patients = new ArrayList<>();
 
     }
 
@@ -15,6 +20,13 @@ public class Dashboard {
     // EFFECTS: Adds a list of all the new patients to the dashbaord
 
     public void addPatients(List<Patient> newPatients) {
+
+        for (Patient patient : newPatients) {
+            
+            if (!patients.contains(patient)) {
+                patients.addAll(newPatients);  
+            }
+        }
        
     }
 
@@ -24,7 +36,7 @@ public class Dashboard {
     // If no patients exist, the method may return an empty list.
 
     public List<Patient> listAllPatients() {
-        return null;
+        return patients;
         
     }
 
@@ -34,9 +46,21 @@ public class Dashboard {
     // Returns true if the patient was successfully removed, otherwise returns false.
 
     public boolean removePatient(String name) {
+
+        if (name == null) {
+            return false;  // If the name is null, return false immediately.
+        }
         
-        return false;
+        for (Patient patient : patients) {
+            if (patient.getName().equals(name)) {
+                patients.remove(patient);  
+                return true;  
+            }
+        }
+    
+        return false;  
     }
+    
 
 
     // REQUIRES: name must not be null, and there must be a patient with the given name in the system.
@@ -46,15 +70,22 @@ public class Dashboard {
 
     public boolean markPatientAsCritical(String name) {
 
-        return false;
+        if (name == null) {
+            return false;  // If name is null, return false
+        }
+    
+        for (Patient patient : patients) {
+            if (patient.getName().equals(name)) {  // Case-sensitive comparison
+                patient.setStatus("Critical");  // Mark the patient as critical
+                return true;  // Return true when the patient is found and updated
+            }
+        }
+    
+        return false; 
 
 
     }
 
-    public void add(List<Patient> newPatients) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'add'");
-    }
-
+    
 	
 }
