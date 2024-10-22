@@ -20,9 +20,12 @@ This project interests me because it allows me to apply my passion for healthcar
 
 
 ## User Stories:
-- As a user, I want to be able to add a new patient profile so that I can start monitoring their health data.
-- As a user, I want to be able to view a list of all my patients and their current health status to quickly identify those who need attention.
-- As a user, I want to be able to log daily health metrics, such as blood pressure and heart rate, for each patient to keep track of their health.
-- As a user, I want to be able to set custom alert thresholds for each patient’s health metrics so that I am notified when values are outside the normal range.
-- As a user, I want to be able to filter the list of patients by health status so that I can prioritize those who need immediate attention.
+- As a healthcare provider, I want to add multiple patient records to the dashboard so that I can view their information.
+- As a healthcare provider, I want to list all patient records in the dashboard so that I can quickly see all monitored patients.
+- As a healthcare provider, I want to remove a patient record from the dashboard so that I can update the list when monitoring ends.
+- As a healthcare provider, I want to mark a patient as "Critical" on the dashboard so that I can prioritize their care.
+- As a healthcare provider, I want to have the option to load previously saved patient health data from a file when I start the application so that I can continue monitoring from where I left off.
+- As a healthcare provider, I want the system to remind me to save the current patient monitoring session when I attempt to exit the dashboard.
+
+
 
