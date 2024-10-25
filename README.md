@@ -25,7 +25,7 @@ This project interests me because it allows me to apply my passion for healthcar
 - As a healthcare provider, I want to remove a patient record from the dashboard so that I can update the list when monitoring ends.
 - As a healthcare provider, I want to mark a patient as "Critical" on the dashboard so that I can prioritize their care.
 - As a healthcare provider, I want to have the option to load previously saved patient health data from a file when I start the application so that I can continue monitoring from where I left off.
-- As a healthcare provider, I want the system to remind me to save the current patient monitoring session when I attempt to exit the dashboard.
+- As a healthcare provider, I want to be able to save my patients to the dashboard.
 
 
 
