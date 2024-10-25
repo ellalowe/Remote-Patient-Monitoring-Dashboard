@@ -6,24 +6,35 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
 
+import persistence.JsonReader;
+import persistence.JsonWriter;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+// The PatientDashboardApp provides a console-based interface for managing patient data, 
+// including adding, updating, and monitoring patient status in the patient monitoring dashboard system.
+
+// Referenced from the JsonSerialization Demo
+// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
 
 public class PatientDashboardApp {
-
+    
+    private static final String JSON_STORE = "./data/dashboard.json";
     private Dashboard dashboard;
     private Scanner scanner;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     public PatientDashboardApp() {
         dashboard = new Dashboard();
         scanner = new Scanner(System.in);
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
     }
 
-    // Main method to run the application
-    public static void main(String[] args) {
-        PatientDashboardApp app = new PatientDashboardApp();
-        app.run();
-    }
-
+   
     // EFFECTS: Method to run the application
+    @SuppressWarnings("methodlength")
     public void run() {
         boolean running = true;
         while (running) {
@@ -44,6 +55,12 @@ public class PatientDashboardApp {
                     markPatientAsCritical();
                     break;
                 case 5:
+                    saveDashboard();
+                    break;
+                case 6:
+                    loadDashboard();
+                    break;
+                case 7:
                     System.out.println("Exiting application...");
                     running = false;
                     break;
@@ -60,7 +77,9 @@ public class PatientDashboardApp {
         System.out.println("2. List All Patients"); 
         System.out.println("3. Remove a Patient");
         System.out.println("4. Mark a Patient as Critical");
-        System.out.println("5. Exit");
+        System.out.println("5. Save Dashboard");
+        System.out.println("6. Load Dashboard");
+        System.out.println("7. Exit");
         System.out.print("Enter your choice: ");
     }
 
@@ -109,6 +128,29 @@ public class PatientDashboardApp {
             System.out.println("Patient marked as critical.");
         } else {
             System.out.println("Patient not found or could not be marked.");
+        }
+    }
+
+    // EFFECTS: Saves the dashboard to a file
+    private void saveDashboard() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(dashboard);
+            jsonWriter.close();
+            System.out.println("Dashboard saved to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Loads the dashboard from a file
+    private void loadDashboard() {
+        try {
+            dashboard = jsonReader.read();
+            System.out.println("Dashboard loaded from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
 }
