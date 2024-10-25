@@ -3,6 +3,9 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 public class Dashboard {
 
     private List<Patient> patients;
@@ -85,6 +88,23 @@ public class Dashboard {
 
     }
 
+    // Referenced from the JsonSerialization Demo
+    // https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+
+     // EFFECTS: Returns this dashboard as a JSON object
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("patients", patientsToJson());  // Convert the list of patients to JSON array
+        return json;
+    }
+
+    // EFFECTS: Converts the list of patients to a JSON array
+    private JSONArray patientsToJson() {
+        return null;
+    }
+
+}
+
     
 	
-}
+         
