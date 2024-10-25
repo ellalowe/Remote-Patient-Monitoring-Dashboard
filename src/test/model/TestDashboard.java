@@ -1,8 +1,11 @@
 package model;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.List;
@@ -34,7 +37,7 @@ public class TestDashboard {
 
         dashboard = new Dashboard();
 
-       newPatientsOne = new ArrayList<>();
+        newPatientsOne = new ArrayList<>();
 
         newPatientsOne.add(paul);
 
@@ -123,6 +126,19 @@ public class TestDashboard {
 
 
     // Tests for remove Patient:
+
+    @Test
+    
+    void testRemovePatientNameNull() {
+
+     
+        boolean result = dashboard.removePatient(null);  
+        assertFalse(result);
+
+
+
+
+    }
 
     @Test
     void testRemovePatientEmptyList() {
@@ -235,17 +251,17 @@ public class TestDashboard {
         assertTrue(patientsInDashboard.contains(sarah));
         assertTrue(patientsInDashboard.contains(tod));
 
-       boolean removePaul = dashboard.removePatient("paul");
-       boolean removeTod = dashboard.removePatient("tod");
+        boolean removePaul = dashboard.removePatient("paul");
+        boolean removeTod = dashboard.removePatient("tod");
 
-       assertTrue(removePaul);
-       assertTrue(removeTod);
+        assertTrue(removePaul);
+        assertTrue(removeTod);
 
         assertFalse(patientsInDashboard.contains(paul));
         assertTrue(patientsInDashboard.contains(sarah));
         assertFalse(patientsInDashboard.contains(tod));
 
-      assertEquals(1, patientsInDashboard.size());
+        assertEquals(1, patientsInDashboard.size());
 
 
 
@@ -254,11 +270,23 @@ public class TestDashboard {
     /// Tests for MarkPatientAsCritical
 
     @Test
+    void testMarkPatientAsCriticalNameNull() {
+
+     
+        boolean result = dashboard.markPatientAsCritical(null);  
+        assertFalse(result);
+
+
+
+
+    }
+
+    @Test
     void testMarkExistingPatientAsCritical() {
         
         dashboard.addPatients(newPatients);
 
-       assertTrue(dashboard.markPatientAsCritical("paul"));
+        assertTrue(dashboard.markPatientAsCritical("paul"));
        
         assertEquals("Critical", paul.getStatus());
     }
@@ -270,8 +298,54 @@ public class TestDashboard {
 
     @Test
     void testMarkPatientWithDifferentCaseName() {
-        assertFalse(dashboard.markPatientAsCritical("Paul"));
+
+        dashboard.addPatients(newPatients);
+        boolean result = dashboard.markPatientAsCritical("Paul");
+        assertFalse(result);
+        assertEquals("Normal", paul.getStatus());
+
     }
+
+    // Tests for JsonObject
+
+    @Test
+    void testToJson() {
+
+        dashboard.addPatients(newPatients);
+
+         // Convert the dashboard to JSON
+        JSONObject json = dashboard.toJson();
+    
+         // Assert that the JSON contains the "patients" key
+        assertTrue(json.has("patients"));
+    
+         // Get the array of patients from the JSON
+        JSONArray patientsJsonArray = json.getJSONArray("patients");
+    
+    
+        assertEquals(3, patientsJsonArray.length());
+    
+  
+        JSONObject patient1Json = patientsJsonArray.getJSONObject(0);
+        assertEquals("paul", patient1Json.getString("name"));
+        assertEquals("Normal", patient1Json.getString("status"));
+    
+ 
+        JSONObject patient2Json = patientsJsonArray.getJSONObject(1);
+        assertEquals("sarah", patient2Json.getString("name"));
+        assertEquals("Normal", patient2Json.getString("status"));
+
+   
+        JSONObject patient3Json = patientsJsonArray.getJSONObject(2);
+        assertEquals("tod", patient3Json.getString("name"));
+        assertEquals("Normal", patient3Json.getString("status"));
+  
+    
+
+
+    }
+
+
 
 
 
