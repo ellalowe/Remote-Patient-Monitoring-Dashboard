@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONObject;
+
 // The Patient class represents a patient with a name and a health status. 
 // By default, the health status of a patient is set to "normal." 
 // The class provides functionality to get and set the health status, and also to retrieve the patient's name.
@@ -37,13 +39,27 @@ public class Patient {
         if (status.equals("Normal") || status.equals("Critical")) {
             this.status = status;
 
-        } else {
-          
-            System.out.println("Invalid status. Status must be 'Normal' or 'Critical'.");
-        }
+        } 
     }
-      
+     // Converts Patient object to a JSON object
+
+     // Referenced from the JsonSerialization Demo
+     // https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+
+    public JSONObject toJson() {
+        return null;
+        
+        
+    }
 }
+        
+
+        
+
+
+   
+      
+
 
 
 
