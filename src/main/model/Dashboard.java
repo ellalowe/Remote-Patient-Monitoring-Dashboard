@@ -100,11 +100,15 @@ public class Dashboard {
 
     // EFFECTS: Converts the list of patients to a JSON array
     private JSONArray patientsToJson() {
-        return null;
+
+        JSONArray jsonArray = new JSONArray();
+        for (Patient patient : patients) {
+            jsonArray.put(patient.toJson());  // Assuming Patient has a toJson() method
+        }
+        return jsonArray;
+        
     }
 
 }
-
-    
 	
          
