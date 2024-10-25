@@ -41,11 +41,12 @@ public class Patient {
 
         } 
     }
-     // Converts Patient object to a JSON object
+     
 
      // Referenced from the JsonSerialization Demo
      // https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
-
+     
+     // EFFECTS: Converts Patient object to a JSON object
     public JSONObject toJson() {
 
         JSONObject json = new JSONObject();
