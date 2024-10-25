@@ -1,0 +1,22 @@
+{"patients": [
+    {
+        "name": "Samantha",
+        "status": "Normal"
+    },
+    {
+        "name": "Kat",
+        "status": "Critical"
+    },
+    {
+        "name": "Daniel",
+        "status": "Critical"
+    },
+    {
+        "name": "kate",
+        "status": "Normal"
+    },
+    {
+        "name": "sarah",
+        "status": "Normal"
+    }
+]}
