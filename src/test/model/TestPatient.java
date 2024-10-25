@@ -1,11 +1,10 @@
 package model;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.util.List;
+
+
 public class TestPatient {
 
     private Patient john;
@@ -24,11 +23,39 @@ public class TestPatient {
     @Test
     void patientTest() {
 
-    assertEquals(john.getName(), "John");
-
-    assertEquals(john.getStatus(), "Normal");
+        assertEquals(john.getName(), "John");
+        john.setStatus("Normal");
+        assertEquals("Normal", john.getStatus());
 
     }
+
+    @Test
+    void testSetStatusCritical() {
+
+        assertEquals(john.getName(), "John");
+        john.setStatus("Critical");
+        assertEquals("Critical", john.getStatus());
+
+        john.setStatus("Normal");
+        assertEquals("Normal", john.getStatus());
+
+
+
+    }
+
+    @Test
+    void testSetStatusInvalid() {
+
+        assertEquals(john.getName(), "John");
+        john.setStatus("Random");
+        assertEquals("Normal", john.getStatus());
+
+
+    }
+}
+
+  
+    
 
     
 
@@ -40,4 +67,4 @@ public class TestPatient {
 
 
 
-}
+
