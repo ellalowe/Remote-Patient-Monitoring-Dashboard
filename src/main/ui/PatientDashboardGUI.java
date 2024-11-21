@@ -1,36 +1,50 @@
 package ui;
 
 import javax.swing.*;
-
 import model.Dashboard;
 import model.Patient;
-
+import persistence.JsonReader;
+import persistence.JsonWriter;
 import java.awt.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class PatientDashboardGUI extends JFrame {
 
+    private static final String JSON_STORE = "./data/dashboard.json";
     private Dashboard dashboard;
     private DefaultListModel<String> patientListModel;
     private JList<String> patientList;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
-    @SuppressWarnings("methodlength")
     public PatientDashboardGUI() {
         dashboard = new Dashboard();
         patientListModel = new DefaultListModel<>();
         patientList = new JList<>(patientListModel);
 
+        jsonWriter = new JsonWriter(JSON_STORE); 
+        jsonReader = new JsonReader(JSON_STORE); 
+
+        // Set up the frame
         setTitle("Patient Monitoring Dashboard");
         setSize(500, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
+        // Add GUI components
+        setupGUI();
+    }
+    
+    @SuppressWarnings("methodlength")
+
+    private void setupGUI() {
         // Add Patient Panel
         JPanel addPatientPanel = new JPanel();
         JTextField patientNameField = new JTextField(10);
         JButton addPatientButton = new JButton("Add Patient");
-
         addPatientPanel.add(new JLabel("Name:"));
         addPatientPanel.add(patientNameField);
         addPatientPanel.add(addPatientButton);
@@ -41,20 +55,22 @@ public class PatientDashboardGUI extends JFrame {
         patientListPanel.add(new JLabel("Patients:"), BorderLayout.NORTH);
         patientListPanel.add(new JScrollPane(patientList), BorderLayout.CENTER);
 
-        // Actions Panel
+        // Actions Panel (Save, Load, Filter, Mark Critical)
         JPanel actionsPanel = new JPanel();
-        actionsPanel.setBackground(new Color(230, 230, 250)); 
         JComboBox<String> statusFilter = new JComboBox<>(new String[] {"All", "Normal", "Critical"});
         JButton filterButton = new JButton("Filter");
-        
         JButton markCriticalButton = new JButton("Mark as Critical");
+        JButton saveButton = new JButton("Save");
+        JButton loadButton = new JButton("Load");
 
         actionsPanel.add(new JLabel("Filter by Status:"));
         actionsPanel.add(statusFilter);
         actionsPanel.add(filterButton);
         actionsPanel.add(markCriticalButton);
+        actionsPanel.add(saveButton);
+        actionsPanel.add(loadButton);
 
-        // Add components to the main frame
+        // Add panels to the frame
         add(addPatientPanel, BorderLayout.NORTH);
         add(patientListPanel, BorderLayout.CENTER);
         add(actionsPanel, BorderLayout.SOUTH);
@@ -65,6 +81,7 @@ public class PatientDashboardGUI extends JFrame {
             if (!name.isEmpty()) {
                 dashboard.addPatients(List.of(new Patient(name)));
                 updatePatientList(dashboard.listAllPatients());
+                patientNameField.setText(""); // Clear input field
             }
         });
 
@@ -79,10 +96,16 @@ public class PatientDashboardGUI extends JFrame {
         markCriticalButton.addActionListener(e -> {
             String selectedPatient = patientList.getSelectedValue();
             if (selectedPatient != null) {
-                String name = selectedPatient.split(" - ")[0]; // Assuming display format is "Name - Status"
+                String name = selectedPatient.split(" - ")[0];
                 dashboard.markPatientAsCritical(name);
                 updatePatientList(dashboard.listAllPatients());
             }
+        });
+
+        saveButton.addActionListener(e -> saveDashboardToFile());
+        loadButton.addActionListener(e -> {
+            loadDashboardFromFile();
+            updatePatientList(dashboard.listAllPatients());
         });
     }
 
@@ -93,11 +116,37 @@ public class PatientDashboardGUI extends JFrame {
         }
     }
 
+    private void saveDashboardToFile() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(dashboard);
+            jsonWriter.close();
+           
+        } catch (FileNotFoundException e) {
+            JOptionPane.showMessageDialog(this, "Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    private void loadDashboardFromFile() {
+        try {
+            dashboard = jsonReader.read();
+            updatePatientList(dashboard.listAllPatients());
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Unable to read from file: " + JSON_STORE);
+        }
+    }
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             PatientDashboardGUI gui = new PatientDashboardGUI();
             gui.setVisible(true);
         });
     }
+       
+   
+    
+    
+
+    
 
 }
