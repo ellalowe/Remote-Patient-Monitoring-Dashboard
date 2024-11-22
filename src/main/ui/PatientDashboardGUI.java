@@ -37,7 +37,7 @@ public class PatientDashboardGUI extends JFrame {
         // Add GUI components
         setupGUI();
     }
-    
+
     @SuppressWarnings("methodlength")
 
     private void setupGUI() {
@@ -48,6 +48,8 @@ public class PatientDashboardGUI extends JFrame {
         addPatientPanel.add(new JLabel("Name:"));
         addPatientPanel.add(patientNameField);
         addPatientPanel.add(addPatientButton);
+       
+      
 
         // Patient List Panel
         JPanel patientListPanel = new JPanel();
@@ -138,8 +140,32 @@ public class PatientDashboardGUI extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            PatientDashboardGUI gui = new PatientDashboardGUI();
-            gui.setVisible(true);
+            // Create the splash screen
+            JWindow splashScreen = new JWindow();
+            JPanel splashPanel = new JPanel(new BorderLayout());
+            splashPanel.setBackground(Color.WHITE);
+    
+            // Add an image to the splash screen (accessing from the data package)
+            JLabel splashImage = new JLabel(new ImageIcon("data/Patient Monitoring Dashboard Splash Screen.png"));
+            splashImage.setHorizontalAlignment(SwingConstants.CENTER);
+            splashPanel.add(splashImage, BorderLayout.CENTER);
+    
+            splashScreen.add(splashPanel);
+            splashScreen.setSize(400, 300); // Adjust size as needed
+            splashScreen.setLocationRelativeTo(null); // Center on screen
+            splashScreen.setVisible(true);
+    
+            // Set a timer to close the splash screen and launch the GUI
+            Timer timer = new Timer(3000, e -> { // 3 seconds
+                splashScreen.setVisible(false);
+                splashScreen.dispose();
+    
+                // Launch the main application
+                PatientDashboardGUI gui = new PatientDashboardGUI();
+                gui.setVisible(true);
+            });
+            timer.setRepeats(false); // Run the timer only once
+            timer.start();
         });
     }
        
