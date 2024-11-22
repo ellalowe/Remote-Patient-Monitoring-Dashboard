@@ -11,6 +11,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+// This is the GUI for managing the Patient Monitoring Dashboard. 
+// Provides functionality to add patients, view and filter patient lists, mark patients as critical, 
+// and save/load patient data to/from a JSON file.
+
 public class PatientDashboardGUI extends JFrame {
 
     private static final String JSON_STORE = "./data/dashboard.json";
@@ -28,28 +32,37 @@ public class PatientDashboardGUI extends JFrame {
         jsonWriter = new JsonWriter(JSON_STORE); 
         jsonReader = new JsonReader(JSON_STORE); 
 
-        // Set up the frame
+        
         setTitle("Patient Monitoring Dashboard");
         setSize(500, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        // Add GUI components
+        
         setupGUI();
     }
 
     @SuppressWarnings("methodlength")
 
+    // MODIFIES: this
+    // EFFECTS: Sets up the GUI components for the Patient Monitoring Dashboard, including panels
+    // for adding patients, viewing and filtering the patient list, and marking patients as critical.
+    // Configures and adds colour to buttons and their associated action listeners for user interactions.
+
     private void setupGUI() {
+
         // Add Patient Panel
         JPanel addPatientPanel = new JPanel();
         JTextField patientNameField = new JTextField(10);
         JButton addPatientButton = new JButton("Add Patient");
+        addPatientButton.setBackground(Color.decode("#473DFF"));
+        addPatientButton.setForeground(Color.WHITE); 
+        addPatientButton.setOpaque(true);
+        addPatientButton.setBorderPainted(false);
+
         addPatientPanel.add(new JLabel("Name:"));
         addPatientPanel.add(patientNameField);
         addPatientPanel.add(addPatientButton);
-       
-      
 
         // Patient List Panel
         JPanel patientListPanel = new JPanel();
@@ -64,6 +77,27 @@ public class PatientDashboardGUI extends JFrame {
         JButton markCriticalButton = new JButton("Mark as Critical");
         JButton saveButton = new JButton("Save");
         JButton loadButton = new JButton("Load");
+
+        // Apply color to all buttons
+        filterButton.setBackground(Color.decode("#473DFF"));
+        filterButton.setForeground(Color.WHITE);
+        filterButton.setOpaque(true);
+        filterButton.setBorderPainted(false);
+
+        markCriticalButton.setBackground(Color.decode("#473DFF"));
+        markCriticalButton.setForeground(Color.WHITE);
+        markCriticalButton.setOpaque(true);
+        markCriticalButton.setBorderPainted(false);
+
+        saveButton.setBackground(Color.decode("#473DFF"));
+        saveButton.setForeground(Color.WHITE);
+        saveButton.setOpaque(true);
+        saveButton.setBorderPainted(false);
+
+        loadButton.setBackground(Color.decode("#473DFF"));
+        loadButton.setForeground(Color.WHITE);
+        loadButton.setOpaque(true);
+        loadButton.setBorderPainted(false);
 
         actionsPanel.add(new JLabel("Filter by Status:"));
         actionsPanel.add(statusFilter);
@@ -110,6 +144,13 @@ public class PatientDashboardGUI extends JFrame {
             updatePatientList(dashboard.listAllPatients());
         });
     }
+        
+
+        
+//  REQUIRES: List of patients is not null.
+//  MODIFIES: This
+//  EFFECTS: Clears the existing patient list and adds the names and statuses
+//          of the given patients in the format "Name - Status".
 
     private void updatePatientList(List<Patient> patients) {
         patientListModel.clear();
@@ -117,7 +158,11 @@ public class PatientDashboardGUI extends JFrame {
             patientListModel.addElement(patient.getName() + " - " + patient.getStatus());
         }
     }
-
+    
+//  REQUIRES: dashboard is not null.
+//  MODIFIES: The file specified by `JSON_STORE`.
+//  EFFECTS: Writes the current state of the dashboard to the specified file.
+//           If the file cannot be found throws file not found exception
     private void saveDashboardToFile() {
         try {
             jsonWriter.open();
@@ -128,6 +173,11 @@ public class PatientDashboardGUI extends JFrame {
             JOptionPane.showMessageDialog(this, "Unable to write to file: " + JSON_STORE);
         }
     }
+    
+    // REQUIRES: The file specified by `JSON_STORE` is not null
+    // MODIFIES: dashboard object and the patient list displayed in the GUI.
+    // EFFECTS: Loads the dashboard and updates the GUI with the data.
+    // If the file cannot be read throws IOException
 
     private void loadDashboardFromFile() {
         try {
@@ -138,6 +188,8 @@ public class PatientDashboardGUI extends JFrame {
         }
     }
 
+     // EFFECTS: Launches the Patient Monitoring Dashboard application. Displays a splash screen
+    // with an image for 3 seconds before initializing and displaying the main GUI.
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             // Create the splash screen
@@ -145,18 +197,18 @@ public class PatientDashboardGUI extends JFrame {
             JPanel splashPanel = new JPanel(new BorderLayout());
             splashPanel.setBackground(Color.WHITE);
     
-            // Add an image to the splash screen (accessing from the data package)
+            // Add an image to the splash screen 
             JLabel splashImage = new JLabel(new ImageIcon("data/Patient Monitoring Dashboard Splash Screen.png"));
             splashImage.setHorizontalAlignment(SwingConstants.CENTER);
             splashPanel.add(splashImage, BorderLayout.CENTER);
     
             splashScreen.add(splashPanel);
-            splashScreen.setSize(400, 300); // Adjust size as needed
-            splashScreen.setLocationRelativeTo(null); // Center on screen
+            splashScreen.setSize(400, 300); 
+            splashScreen.setLocationRelativeTo(null); 
             splashScreen.setVisible(true);
     
             // Set a timer to close the splash screen and launch the GUI
-            Timer timer = new Timer(3000, e -> { // 3 seconds
+            Timer timer = new Timer(3000, e -> {
                 splashScreen.setVisible(false);
                 splashScreen.dispose();
     
@@ -164,7 +216,7 @@ public class PatientDashboardGUI extends JFrame {
                 PatientDashboardGUI gui = new PatientDashboardGUI();
                 gui.setVisible(true);
             });
-            timer.setRepeats(false); // Run the timer only once
+            timer.setRepeats(false); 
             timer.start();
         });
     }
