@@ -1,6 +1,10 @@
 package ui;
 
 import javax.swing.*;
+import model.Event;
+import model.EventLog;
+import java.awt.event.WindowListener;
+import java.awt.event.WindowEvent;
 import model.Dashboard;
 import model.Patient;
 import persistence.JsonReader;
@@ -9,13 +13,13 @@ import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 // This is the GUI for managing the Patient Monitoring Dashboard. 
 // Provides functionality to add patients, view and filter patient lists, mark patients as critical, 
 // and save/load patient data to/from a JSON file.
 
-public class PatientDashboardGUI extends JFrame {
+public class PatientDashboardGUI extends JFrame implements WindowListener {
 
     private static final String JSON_STORE = "./data/dashboard.json";
     private Dashboard dashboard;
@@ -35,7 +39,9 @@ public class PatientDashboardGUI extends JFrame {
         
         setTitle("Patient Monitoring Dashboard");
         setSize(500, 400);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // Handle close manually
+        addWindowListener(this); // Add WindowListener
         setLayout(new BorderLayout());
 
         
@@ -123,9 +129,7 @@ public class PatientDashboardGUI extends JFrame {
 
         filterButton.addActionListener(e -> {
             String selectedStatus = (String) statusFilter.getSelectedItem();
-            List<Patient> filteredPatients = dashboard.listAllPatients().stream()
-                    .filter(p -> "All".equals(selectedStatus) || p.getStatus().equals(selectedStatus))
-                    .collect(Collectors.toList());
+            List<Patient> filteredPatients = dashboard.filterPatients(selectedStatus); 
             updatePatientList(filteredPatients);
         });
 
@@ -186,6 +190,49 @@ public class PatientDashboardGUI extends JFrame {
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "Unable to read from file: " + JSON_STORE);
         }
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        // Log all events to the console when the window is closing
+        EventLog eventLog = EventLog.getInstance();
+        System.out.println("Event Log (on application exit):");
+        for (Event event : eventLog) {
+            System.out.println(event.getDate() + ": " + event.getDescription());
+        }
+
+        // Dispose the window
+        dispose();
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+        
     }
 
      // EFFECTS: Launches the Patient Monitoring Dashboard application. Displays a splash screen
