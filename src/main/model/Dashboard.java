@@ -27,6 +27,7 @@ public class Dashboard {
         for (Patient patient : newPatients) {
             if (!patients.contains(patient)) {
                 patients.add(patient);  // Add the patient individually
+                EventLog.getInstance().logEvent(new Event("Patient added: " + patient.getName()));
             }
         }
        
@@ -79,6 +80,7 @@ public class Dashboard {
         for (Patient patient : patients) {
             if (patient.getName().equals(name)) {  // Case-sensitive comparison
                 patient.setStatus("Critical");  // Mark the patient as critical
+                EventLog.getInstance().logEvent(new Event("Marked patient as critical: " + patient.getName()));
                 return true;  // Return true when the patient is found and updated
             }
         }
@@ -108,6 +110,25 @@ public class Dashboard {
         return jsonArray;
         
     }
+
+    // REQUIRES: Status not null
+    // MODIFIES: EventLog (logs the filtering action)
+    // EFFECTS: Returns a list of patients whose status matches the provided status.
+    public List<Patient> filterPatients(String status) {
+        List<Patient> filteredPatients = new ArrayList<>();
+    
+        for (Patient patient : patients) {
+            if ("All".equals(status) || patient.getStatus().equals(status)) {
+                filteredPatients.add(patient);
+            }
+        }
+    
+        // Log the filtering event
+        EventLog.getInstance().logEvent(new Event("Filtered patients by status: " + status));
+    
+        return filteredPatients;
+    }
+    
 
 }
 	
