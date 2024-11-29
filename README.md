@@ -32,5 +32,15 @@ in the drop down list. Then selecting the button 'Filter' for the action to exec
 - You can save the state of my application by selecting the 'Save' button.
 - You can reload the state of my application by selecting the 'Load' button.
 
+## Phase 4: Task 2
+- Thu Nov 28 16:04:38 PST 2024: Patient added: Ella
+- Thu Nov 28 16:04:43 PST 2024: Patient added: Daniel
+- Thu Nov 28 16:04:45 PST 2024: Marked patient as critical: Daniel
+- Thu Nov 28 16:04:49 PST 2024: Filtered patients by status: Normal
+- Thu Nov 28 16:04:51 PST 2024: Filtered patients by status: Critical
+
+## Phase 4: Task 3
+An improvement that could be made could address the tight coupling between PatientDashboardGUI and Dashboard. By introducing an interface for Dashboard, the GUI could depend on an abstraction rather than the concrete Dashboard class. This would make the GUI more flexible and allow for alternative implementations of Dashboard in the future. It helps improve scalability making the system better equipped to handle future enhancements.
+
 
 
